@@ -7,19 +7,21 @@ class Solution{
 		
 
 	public:
-	int maxSumIS(int nums[], int n)  
+	int maxSumIS(int arr[], int n)  
 	{  
-	  vector<int>msis(n,0);
-	  for(int i=0;i<n;i++){
-	      msis[i]=nums[i];
-	  }
-	  for(int i=1;i<n;i++){
-	      for(int j=0;j<i;j++){
-	          if(nums[j]<nums[i]&&msis[i]<msis[j]+nums[i])
-	          msis[i]=msis[j]+nums[i];
-	      }
-	  }
-	  return *max_element(msis.begin(),msis.end());
+	   vector<int>dp(n,1);
+	   vector<int>sum(n);
+	   for(int i=0;i<n;i++)sum[i]=arr[i];
+	   
+	   for(int i=1;i<n;i++){
+	       for(int j=0;j<i;j++){
+	           if(arr[j]<arr[i]){
+	               dp[i]=max(dp[j]+1,dp[i]);
+	               sum[i]=max(sum[i],arr[i]+sum[j]);
+	           }
+	       }
+	   }
+	   return *max_element(sum.begin(),sum.end());
 	}  
 };
 
